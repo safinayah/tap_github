@@ -8,22 +8,29 @@ import json
 # }
 import requests
 
-with open("config.json", 'r') as f:
-    data_conf = f.readlines()
-token = data_conf["access_token"]
-owner_name = data_conf["Owner_name"]
-repo_name = data_conf["repo_name"]
+def read_config():
+    with open("config.json", 'r') as f:
+        data_conf = f.readlines()
+    return data_conf
 
 
-
-def get_pull_requests(token, owner_name, repo_name):
-    _url = "https://api.github.com/repos/{}/{}/pulls".format(owner_name, repo_name)
-
-    _headers = {
+_headers = {
         # "post": "/repos/amerknane/ameerkn/ameerkn/pulls",
         "Accept": "application/vnd.github+json",
-        "Authorization": "Bearer {}".format(token),
+        "Authorization": "Bearer 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",
 
     }
+def get_pull_requests(data):
+    _url = "https://api.github.com/repos/{}/{}/pulls".format(data['access_token'],data['repo_name'])
+
+
     response = requests.get(_url, _headers)
+
     return response
+
+if __name__ == '__main__':
+    data=read_config()
+    get_pull_requests(data)
+
+
+
