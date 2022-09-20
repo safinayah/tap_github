@@ -2,10 +2,11 @@ import json
 import requests
 
 with open("config.json", 'r') as file:
-    pre = file.readlines()
-token = pre["access_token"]
-owner = pre["owner_name"]
-repo = pre["repository_name"]
+    pre = json.load(file)
+
+    token = pre["access_token"]
+    owner = pre["owner_name"]
+    repo = pre["repository_name"]
 
 
 
@@ -16,3 +17,7 @@ def get_events(token, owner, repo):
               }
     response = requests.get(url, header)
     return response
+
+
+response = get_events(token,owner,repo)
+print(response.json())
